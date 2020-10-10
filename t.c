@@ -1,17 +1,28 @@
-// 線形探索のプログラム
+// 二分探索のプログラム
 
 #include <stdio.h>
 #include <stdlib.h>
 #define ARRAY_SIZE 13
 
-int linear_search(int array[], int n, int key)
+int binary_search(int array[], int num, int key)
 {
-  int i;
-  for (i = 0; i < n; i++)
+  int middle, low, high;
+  low = 0;
+  high = num - 1;
+  while (low <= high)
   {
-    if (array[i] == key)
+    middle = (low + high) / 2;
+    if (key == array[middle])
     {
-      return i;
+      return middle;
+    }
+    else if (key < array[middle])
+    {
+      high = middle - 1;
+    }
+    else
+    {
+      low = middle + 1;
     }
   }
   return -1; // 見つからなかったら-1を返す
@@ -31,11 +42,12 @@ int main()
 {
   int index, key;
   int array[ARRAY_SIZE] = {
-      900, 990, 210, 50, 80, 150, 330,
-      470, 510, 530, 800, 250, 280};
+      50, 80, 150, 210, 250, 280, 330,
+      470, 510, 530, 800, 900, 990};
+
   key = 800;
   print_array(array, ARRAY_SIZE);
-  index = linear_search(array, ARRAY_SIZE, key);
+  index = binary_search(array, ARRAY_SIZE, key);
   if (index != -1)
   {
     printf("Found: %d (Index:%d)\n", key, index);
